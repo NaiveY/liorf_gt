@@ -1,3 +1,20 @@
+# Cartin dataset 
+------------------- 2025-04-25 -----------------------
+- imageProjection.cpp: remove NaN points for ouster32 lidar(is_dense = false)
+- mapOptimization.cpp: make is_degenarate = false, this will not reduve the weight of lidar at any time(especially for lwn data)
+
+
+- modify the lio_sam_ouster.yaml for running Cartin dataset
+- for loop_closure parameters, give a greater value for historyKeyframeSearchTimeDiff and historyKeyframeSearchRadius(mainly for blue_loop data)
+
+# Running instruction
+
+change savePCDDirectory to customized folder path
+roslaunch lio_rf run_lio_sam_ouster.launch
+play the data rosbags
+
+
+
 # New Feature
 ------------------- Update Date: 2022-11-20 -------------------
 - This version has removed the feature extraction module, making it easier to adapt to different lidars;
@@ -160,31 +177,33 @@ Video：[基于LIO-SAM框架SLAM算法开发系列视频](https://space.bilibili
 
 ## Menu
 
-  - [**System architecture**](#system-architecture)
-
-  - [**Package dependency**](#dependency)
-
-  - [**Package install**](#install)
-
-  - [**Prepare lidar data**](#prepare-lidar-data) (must read)
-
-  - [**Prepare IMU data**](#prepare-imu-data) (must read)
-
-  - [**Sample datasets**](#sample-datasets)
-
-  - [**Run the package**](#run-the-package)
-
-  - [**Other notes**](#other-notes)
-
-  - [**Issues**](#issues)
-
-  - [**Paper**](#paper)
-
-  - [**TODO**](#todo)
-
-  - [**Related Package**](#related-package)
-
-  - [**Acknowledgement**](#acknowledgement)
+- [Cartin dataset](#cartin-dataset)
+- [Running instruction](#running-instruction)
+- [New Feature](#new-feature)
+  - [Dependency](#dependency)
+  - [Install](#install)
+  - [Run the package](#run-the-package)
+  - [For fusion gps factor](#for-fusion-gps-factor)
+  - [Mapping](#mapping)
+  - [Performance](#performance)
+  - [Acknowledgments](#acknowledgments)
+- [LIO-SAM](#lio-sam)
+  - [Menu](#menu)
+  - [System architecture](#system-architecture)
+  - [Dependency](#dependency-1)
+  - [Install](#install-1)
+  - [Using Docker](#using-docker)
+  - [Prepare lidar data](#prepare-lidar-data)
+  - [Prepare IMU data](#prepare-imu-data)
+  - [Sample datasets](#sample-datasets)
+  - [Run the package](#run-the-package-1)
+  - [Other notes](#other-notes)
+  - [Service](#service)
+  - [Issues](#issues)
+  - [Paper](#paper)
+  - [TODO](#todo)
+  - [Related Package](#related-package)
+  - [Acknowledgement](#acknowledgement)
 
 ## System architecture
 
