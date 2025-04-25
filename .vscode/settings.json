@@ -1,0 +1,14 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/ybhh/liorf_ws/devel/lib/python3/dist-packages",
+        "/home/ybhh/liorf_localization_ws/devel/lib/python3/dist-packages",
+        "/home/ybhh/catkin_ws/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/ybhh/liorf_ws/devel/lib/python3/dist-packages",
+        "/home/ybhh/liorf_localization_ws/devel/lib/python3/dist-packages",
+        "/home/ybhh/catkin_ws/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages"
+    ]
+}

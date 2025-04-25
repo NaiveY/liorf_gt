@@ -1,0 +1,27 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/ybhh/liorf_ws/devel/include/**",
+        "/home/ybhh/liorf_localization_ws/devel/include/**",
+        "/home/ybhh/catkin_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/ybhh/liorf_ws/src/liorf/include/**",
+        "/home/ybhh/liorf_localization_ws/src/liorf_localization/include/**",
+        "/home/ybhh/catkin_ws/src/ROLO/include/**",
+        "/home/ybhh/catkin_ws/src/suite_setup/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

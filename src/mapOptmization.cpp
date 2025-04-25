@@ -1269,6 +1269,15 @@ public:
             matX.copyTo(matX2);
             matX = matP * matX2;
         }
+        isDegenerate = false;
+        // std::cout << "isDegenerate: " << isDegenerate << std::endl;
+
+//                 // write "isDegenerate" with timestamp into a file
+//         // check weather the file exists
+//         std::ofstream file;
+//         file.open("/home/ybhh/bags/lwn/degeberate.txt", std::ios::app);
+//         file << std::fixed << this->cloudInfo.header.stamp.toSec() << " " << isDegenerate << std::endl;
+//         file.close();
 
         transformTobeMapped[0] += matX.at<float>(0, 0);
         transformTobeMapped[1] += matX.at<float>(1, 0);
@@ -1462,7 +1471,7 @@ public:
                 curGPSPoint.x = gps_x;
                 curGPSPoint.y = gps_y;
                 curGPSPoint.z = gps_z;
-                if (common_lib_->pointDistance(curGPSPoint, lastGPSPoint) < 5.0)
+                if (common_lib_->pointDistance(curGPSPoint, lastGPSPoint) < 0.1)
                     continue;
                 else
                     lastGPSPoint = curGPSPoint;

@@ -212,7 +212,7 @@ public:
 
         // convert cloud
         currentCloudMsg = std::move(cloudQueue.front());
-        cloudQueue.pop_front();
+        cloudQueue.pop_front(); 
         if (sensor == SensorType::VELODYNE || sensor == SensorType::LIVOX)
         {
             pcl::moveFromROSMsg(currentCloudMsg, *laserCloudIn);
@@ -221,6 +221,11 @@ public:
         {
             // Convert to Velodyne format
             pcl::moveFromROSMsg(currentCloudMsg, *tmpOusterCloudIn);
+
+            // remove NaN points
+            std::vector<int> indices;
+            pcl::removeNaNFromPointCloud(*tmpOusterCloudIn, *tmpOusterCloudIn, indices);
+       
             laserCloudIn->points.resize(tmpOusterCloudIn->size());
             laserCloudIn->is_dense = tmpOusterCloudIn->is_dense;
             for (size_t i = 0; i < tmpOusterCloudIn->size(); i++)
