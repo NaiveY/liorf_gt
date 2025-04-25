@@ -9,9 +9,11 @@
 
 # Running instruction
 
-change savePCDDirectory to customized folder path
-roslaunch lio_rf run_lio_sam_ouster.launch
-play the data rosbags
+1. change savePCDDirectory to customized folder path
+  
+2. roslaunch lio_rf run_lio_sam_ouster.launch
+
+3. play the data rosbags
 
 
 
