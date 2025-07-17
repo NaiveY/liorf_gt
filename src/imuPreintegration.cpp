@@ -120,6 +120,23 @@ public:
         laserOdometry.pose.pose.orientation = tf::createQuaternionMsgFromRollPitchYaw(roll, pitch, yaw);
         pubImuOdometry.publish(laserOdometry);
 
+        // Save trajectory
+        double time = laserOdometry.header.stamp.toSec();
+        static std::fstream fout_traj(saveIMUOdomPath, std::ios::out);
+        static std::ostringstream stamp;
+        stamp.str("");
+        if (fout_traj.is_open())
+        {
+        std::string tstamp = std::to_string(time);
+        geometry_msgs::Quaternion quat_msg = tf::createQuaternionMsgFromRollPitchYaw(
+            roll, pitch, yaw);
+        
+        Eigen::Quaterniond q_curr(quat_msg.w, quat_msg.x, quat_msg.y, quat_msg.z);
+        q_curr.normalize(); 
+        Eigen::Vector3d vec = {x, y, z};
+        saveTrajectoryTUMformat(fout_traj, tstamp, vec, q_curr);
+        }
+
         // publish tf
         static tf::TransformBroadcaster tfOdom2BaseLink;
         tf::Transform tCur;
@@ -151,6 +168,11 @@ public:
             }
         }
     }
+        
+    void saveTrajectoryTUMformat(std::fstream &fout, std::string &stamp, Eigen::Vector3d &xyz, Eigen::Quaterniond &xyzw){
+        fout << stamp << " " << xyz[0] << " " << xyz[1] << " " << xyz[2] << " " << xyzw.x() << " " << xyzw.y() << " " << xyzw.z() << " " << xyzw.w() << std::endl;
+    }
+
 };
 
 class IMUPreintegration : public ParamServer

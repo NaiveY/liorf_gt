@@ -95,6 +95,10 @@ public:
     bool savePCD;
     string savePCDDirectory;
 
+    // Save odom
+    string saveOdomPath;
+    string saveIMUOdomPath;
+
     // Lidar Sensor Configuration
     SensorType sensor;
     int N_SCAN;
@@ -174,6 +178,10 @@ public:
 
         nh.param<bool>("liorf/savePCD", savePCD, false);
         nh.param<std::string>("liorf/savePCDDirectory", savePCDDirectory, "/Downloads/LOAM/");
+
+        nh.param<std::string>("liorf/saveOdomPath", saveOdomPath, "/home/ybhh/bags/");
+        nh.param<std::string>("liorf/saveIMUOdomPath", saveIMUOdomPath, "/home/ybhh/bags/");
+
 
         std::string sensorStr;
         nh.param<std::string>("liorf/sensor", sensorStr, "");

@@ -1679,6 +1679,22 @@ public:
         laserOdometryROS.pose.pose.position.z = transformTobeMapped[5];
         laserOdometryROS.pose.pose.orientation = tf::createQuaternionMsgFromRollPitchYaw(transformTobeMapped[0], transformTobeMapped[1], transformTobeMapped[2]);
         pubLaserOdometryGlobal.publish(laserOdometryROS);
+
+        // Save odom laser frequency
+        static std::fstream fout_traj(saveOdomPath, std::ios::out);
+        static std::ostringstream stamp;
+        stamp.str("");
+        if (fout_traj.is_open())
+        {
+        std::string tstamp = std::to_string(timeLaserInfoStamp.toSec());
+        geometry_msgs::Quaternion quat_msg = tf::createQuaternionMsgFromRollPitchYaw(
+            transformTobeMapped[0], transformTobeMapped[1], transformTobeMapped[2]);
+        
+        Eigen::Quaterniond q_curr(quat_msg.w, quat_msg.x, quat_msg.y, quat_msg.z);
+        q_curr.normalize(); 
+        Eigen::Vector3d vec = {transformTobeMapped[3], transformTobeMapped[4], transformTobeMapped[5]};
+        saveTrajectoryTUMformat(fout_traj, tstamp, vec, q_curr);
+        }
         
         // Publish TF
         static tf::TransformBroadcaster br;
@@ -1736,6 +1752,10 @@ public:
                 laserOdomIncremental.pose.covariance[0] = 0;
         }
         pubLaserOdometryIncremental.publish(laserOdomIncremental);
+    }
+
+    void saveTrajectoryTUMformat(std::fstream &fout, std::string &stamp, Eigen::Vector3d &xyz, Eigen::Quaterniond &xyzw){
+        fout << stamp << " " << xyz[0] << " " << xyz[1] << " " << xyz[2] << " " << xyzw.x() << " " << xyzw.y() << " " << xyzw.z() << " " << xyzw.w() << std::endl;
     }
 
     void publishFrames()

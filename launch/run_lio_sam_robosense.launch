@@ -3,7 +3,7 @@
     <arg name="project" default="liorf"/>
     
     <!-- Parameters -->
-    <rosparam file="$(find liorf)/config/lio_sam_ouster.yaml" command="load" />
+    <rosparam file="$(find liorf)/config/lio_sam_robosense.yaml" command="load" />
 
     <!--- LOAM -->
     <include file="$(find liorf)/launch/include/module_loam.launch" />
@@ -17,5 +17,6 @@
     <!--- Run Rviz-->
     <env name="DISABLE_ROS1_EOL_WARNINGS" value="true" />
     <include file="$(find liorf)/launch/include/module_rviz.launch" />
+
 
 </launch>

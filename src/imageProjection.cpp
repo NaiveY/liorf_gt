@@ -34,13 +34,14 @@ struct RobosensePointXYZIRT
 {
     PCL_ADD_POINT4D
     float intensity;
-    uint16_t ring;
+    // uint16_t ring;
     double timestamp;
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 } EIGEN_ALIGN16;
 POINT_CLOUD_REGISTER_POINT_STRUCT(RobosensePointXYZIRT, 
       (float, x, x)(float, y, y)(float, z, z)(float, intensity, intensity)
-      (uint16_t, ring, ring)(double, timestamp, timestamp)
+    //   (uint16_t, ring, ring)
+      (double, timestamp, timestamp)
 )
 
 // mulran datasets
@@ -262,6 +263,11 @@ public:
             pcl::PointCloud<RobosensePointXYZIRT>::Ptr tmpRobosenseCloudIn(new pcl::PointCloud<RobosensePointXYZIRT>());
             // Convert to robosense format
             pcl::moveFromROSMsg(currentCloudMsg, *tmpRobosenseCloudIn);
+
+            // remove NaN points
+            std::vector<int> indices;
+            pcl::removeNaNFromPointCloud(*tmpRobosenseCloudIn, *tmpRobosenseCloudIn, indices);
+
             laserCloudIn->points.resize(tmpRobosenseCloudIn->size());
             laserCloudIn->is_dense = tmpRobosenseCloudIn->is_dense;
 
@@ -273,7 +279,7 @@ public:
                 dst.y = src.y;
                 dst.z = src.z;
                 dst.intensity = src.intensity;
-                dst.ring = src.ring;
+                // dst.ring = src.ring;
                 dst.time = src.timestamp - start_stamptime;
             }
         } 
@@ -298,7 +304,11 @@ public:
         static int ringFlag = 0;
         if (ringFlag == 0)
         {
-            ringFlag = -1;
+            if (sensor == SensorType::ROBOSENSE){
+                ringFlag = 1; // Robosense M1 point cloud has no ring channel, but we can use the point index as a ring number
+            } else {
+                ringFlag = -1;
+            }
             for (int i = 0; i < (int)currentCloudMsg.fields.size(); ++i)
             {
                 if (currentCloudMsg.fields[i].name == "ring")
